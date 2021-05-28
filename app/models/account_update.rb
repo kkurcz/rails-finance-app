@@ -6,5 +6,5 @@ class AccountUpdate < ApplicationRecord
   validates :currency, inclusion: { in: ["USD", "EURO", "CNY"] }
 
   # shows currency of transaction
-  monetize :price_cents
+  # monetize :price_cents
 end
