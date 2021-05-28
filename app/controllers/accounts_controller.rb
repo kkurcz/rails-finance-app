@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: [:show] #:edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
     @accounts = Account.all
@@ -29,8 +29,8 @@ class AccountsController < ApplicationController
   # POST /accounts
   def create
     @account = Account.new(account_params)
-    @account.user = current_user
-    authorize @account
+    @account.user_id = current_user.id
+    # authorize @account
 
     if @account.save
       redirect_to @account, notice: 'account was created.'

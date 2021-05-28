@@ -2,9 +2,14 @@
 <p>Find me in app/views/accounts/name:string.html.erb</p>
 
 <% @accounts.each do |account|%>
-  <h5 class="mt-5"><%= link_to account.name, account_path(account) %></h5>
+  <h5 class="mt-5 mr-5 d-inline-block"><%= link_to account.name, account_path(account) %></h5>
+  <p class="mt-5 d-inline-block">
+    <%= link_to '🆕Update', new_account_account_update_path(account) %>
+  </p>
   <% @account_updates.where(account_id: account.id).order(created_at: :desc).each do |au| %>
-    <%= au.balance %>
+  <p>
+    💸<%= au.balance %> <%= au.currency %> | <%= au.created_at.strftime("%A, %b %e %Y") %>
+  </p>
   <% end %>
 <% end  %>
 

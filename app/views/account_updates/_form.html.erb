@@ -1,0 +1,16 @@
+
+<h2>Please create the account update </h2>
+
+<%= simple_form_for [ @account, @account_update ] do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.error[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :currency, placeholder: "currency", label: "Currency", collection: ["USD", "EURO", "CNY"] %>
+    <%= f.input :balance, placeholder: "Balance" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit%>
+  </div>
+<% end  %>
