@@ -7,7 +7,9 @@
 <h3 class="mt-5">History</h3>
 <ul>
   <% @account_updates.each do |au| %>
-      <li><%= au.balance %> | <%= au.currency %>
+    <li>
+      <%= au.balance %> | <%= au.currency %> -- <%= link_to "Delete", account_account_update_path(au.id), method: :delete, data: {confirm: "Are you sure?"} %>
+    </li>
   <% end %>
 </ul>
 
