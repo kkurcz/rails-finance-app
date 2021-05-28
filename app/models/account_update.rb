@@ -1,0 +1,2 @@
+class AccountUpdate < ApplicationRecord
+end

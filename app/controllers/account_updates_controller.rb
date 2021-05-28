@@ -1,0 +1,2 @@
+class AccountUpdatesController < ApplicationController
+end
