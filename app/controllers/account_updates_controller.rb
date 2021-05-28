@@ -38,9 +38,23 @@ class AccountUpdatesController < ApplicationController
     end
   end
 
+    # PATCH/PUT /walles/1
+  def update
+    if @account_update.update(account_params)
+      redirect_to @account, notic: 'update was updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @account_update.destroy
+    redirect_to accounts_url, notice: 'update was deleted.'
+  end
+
   private
   def set_account_update
-    @account_update = account_update.find(params[:id])
+    @account_update = AccountUpdate.find(params[:id])
     authorize @account_update
   end
 

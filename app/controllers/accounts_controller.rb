@@ -5,8 +5,17 @@ class AccountsController < ApplicationController
     # @accounts = Account.all
     @account_updates = policy_scope(AccountUpdate).order(created_at: :desc)
 
-    @accounts = policy_scope(Account).order(created_at: :desc)
+    @accounts = policy_scope(Account).order(created_at: :asc)
 
+    @total_usd = 0
+    @total_cny = 0
+    @total_euro = 0
+
+    policy_scope(AccountUpdate).each do |account|
+      @total_usd += account.balance_usd
+      @total_cny += account.balance_cny
+      @total_euro += account.balance_euro
+    end
     # show recent transactions on users homepage
     # @transactions = policy_scope(Transaction).where(sender_account: @accounts).order(created_at: :desc)
   end
