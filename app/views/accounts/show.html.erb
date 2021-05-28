@@ -1,0 +1,25 @@
+<h1>
+  <%= @account.name %>
+</h1>
+
+<h5>Current Balance:</h5>
+
+<h3 class="mt-5">History</h3>
+<ul>
+  <% @account_updates.each do |au| %>
+      <li><%= au.balance %> | <%= au.currency %>
+  <% end %>
+</ul>
+
+<% if @account_updates.length < 1%>
+  <h6 class="mt-4">No account updates yet, make your first one👇</h6>
+<% end %>
+
+<h3 class="mt-5">New Account Update</h3>
+<%= link_to 'Account update', new_account_account_update_path(@account) %>
+
+<h3 class="mt-5">Manage this Account</h3>
+
+<%= link_to 'Edit', edit_account_path(@account) %> /
+<%= link_to 'Delete Account', account_path(@account), method: :delete, data: {confirm: "Are you sure?"} %> /
+<%= link_to 'Back', root_path %>

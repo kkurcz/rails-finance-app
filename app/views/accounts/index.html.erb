@@ -1,8 +1,9 @@
-<h1>Accounts#name:string</h1>
+<h1>Accounts#index</h1>
 <p>Find me in app/views/accounts/name:string.html.erb</p>
 
 <% @accounts.each do |account|%>
-
-  <%= account.name %>
-
+  <h5 class="mt-5"><%= link_to account.name, account_path(account) %></h5>
+  <% @account_updates.where(account_id: account.id).order(created_at: :desc).each do |au| %>
+    <%= au.balance %>
+  <% end %>
 <% end  %>
