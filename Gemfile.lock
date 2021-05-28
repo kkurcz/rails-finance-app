@@ -111,6 +111,15 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.0)
     minitest (5.14.4)
+    monetize (1.9.4)
+      money (~> 6.12)
+    money (6.13.8)
+      i18n (>= 0.6.4, <= 2)
+    money-rails (1.14.0)
+      activesupport (>= 3.0)
+      monetize (~> 1.9.0)
+      money (~> 6.13.2)
+      railties (>= 3.0)
     msgpack (1.4.2)
     nio4r (2.5.7)
     nokogiri (1.11.6-x86_64-darwin)
@@ -130,6 +139,8 @@ GEM
     public_suffix (4.0.6)
     puma (4.3.8)
       nio4r (~> 2.0)
+    pundit (2.1.0)
+      activesupport (>= 3.0.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-proxy (0.6.5)
@@ -243,10 +254,12 @@ DEPENDENCIES
   font-awesome-sass
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  money-rails
   pg (>= 0.18, < 2.0)
   pry-byebug
   pry-rails
   puma (~> 4.1)
+  pundit
   rails (~> 6.0.3, >= 6.0.3.7)
   redis (~> 4.0)
   sass-rails (>= 6)

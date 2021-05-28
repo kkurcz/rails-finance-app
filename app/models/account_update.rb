@@ -27,7 +27,7 @@ class AccountUpdate < ApplicationRecord
     else
       self.balance_usd = balance
       self.balance_euro = balance * usd_euro_rate
-      self.balance_cny = balance  * user_cny_rate
+      self.balance_cny = balance  * usd_cny_rate
     end
     self.save
   end

@@ -29,6 +29,10 @@ gem 'redis', '~> 4.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'devise'
+# for currency display
+gem 'money-rails'
+# for user authorization
+gem 'pundit'
 
 gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass'

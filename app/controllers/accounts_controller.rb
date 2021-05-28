@@ -2,10 +2,10 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
-    @accounts = Account.all
-    @account_updates = AccountUpdate.all
+    # @accounts = Account.all
+    @account_updates = policy_scope(AccountUpdate).order(created_at: :desc)
 
-    # @accounts = policy_scope(account).order(created_at: :desc)
+    @accounts = policy_scope(Account).order(created_at: :desc)
 
     # show recent transactions on users homepage
     # @transactions = policy_scope(Transaction).where(sender_account: @accounts).order(created_at: :desc)
@@ -13,13 +13,13 @@ class AccountsController < ApplicationController
 
   def show
     # show all transactions of a given account
-    @account_updates = AccountUpdate.where(account_id: @account.id).order(created_at: :desc)
+    @account_updates = policy_scope(AccountUpdate).where(account_id: @account.id).order(created_at: :desc)
     # @account_updates = policy_scope(Transaction).where(sender_account: @account.id).order(created_at: :desc)
   end
 
   def new
     @account = Account.new
-    # authorize @account
+    authorize @account
   end
 
   # GET /account/1/edit
@@ -30,10 +30,10 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     @account.user_id = current_user.id
-    # authorize @account
+    authorize @account
 
     if @account.save
-      redirect_to @account, notice: 'account was created.'
+      redirect_to root_path, notice: 'account was created.'
     else
       render :new
     end
@@ -56,7 +56,7 @@ class AccountsController < ApplicationController
   private
   def set_account
     @account = Account.find(params[:id])
-    # authorize @account
+    authorize @account
   end
 
   def account_params
