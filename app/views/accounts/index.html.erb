@@ -13,8 +13,11 @@
         -- <%= link_to "Delete", account_account_update_path(account.id, au.id), method: :delete, data: {confirm: "Are you sure?"} %>
       </p>
       <% end %>
+      <%= line_chart AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance_usd) %>
     <% end  %>
   </div>
+
+
 
 <h1 class="mt-5">Total</h1>
 
