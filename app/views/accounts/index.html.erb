@@ -13,7 +13,11 @@
         -- <%= link_to "Delete", account_account_update_path(account.id, au.id), method: :delete, data: {confirm: "Are you sure?"} %>
       </p>
       <% end %>
-      <%= line_chart AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance_usd) %>
+      <div class="chart">
+        <% currency = AccountUpdate.where(account_id: account.id) %>
+        <% data = AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance) %>
+        <%= line_chart data, ytitle: "#{currency.last.currency}", label: "Value" %>
+      </div>
     <% end  %>
   </div>
 
@@ -24,6 +28,14 @@
 <p>
   💰 $<%= @total_usd %> | ¥<%= @total_cny %> | €<%= @total_euro %>
 </p>
+
+<div class="chart-big">
+  <% data = [{name: "USD", data: AccountUpdate.group_by_day(:created_at).sum(:balance_usd)},
+                  {name: "CNY", data: AccountUpdate.group_by_day(:created_at).sum(:balance_cny)},
+                  {name: "EURO", data: AccountUpdate.group_by_day(:created_at).sum(:balance_euro)}]  %>
+  <%= line_chart data, xtitle: "Date", ytitle: "Balance", label: "Value"%>
+</div>
+
 
 <div class="mt-5">
   👉 <%= link_to 'Create a new account', new_account_path %>
