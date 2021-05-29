@@ -7,15 +7,22 @@ class AccountsController < ApplicationController
 
     @accounts = policy_scope(Account).order(created_at: :asc)
 
+
     @total_usd = 0
     @total_cny = 0
     @total_euro = 0
 
-    policy_scope(AccountUpdate).each do |account|
-      @total_usd += account.balance_usd
-      @total_cny += account.balance_cny
-      @total_euro += account.balance_euro
+    @accounts.each do |account|
+      @total_usd += AccountUpdate.where(account_id: account.id).last.balance_usd
+      @total_cny += AccountUpdate.where(account_id: account.id).last.balance_cny
+      @total_euro += AccountUpdate.where(account_id: account.id).last.balance_euro
     end
+
+    # policy_scope(AccountUpdate).each do |au|
+    #   @total_usd += au.balance_usd
+    #   @total_cny += au.balance_cny
+    #   @total_euro += au.balance_euro
+    # end
     # show recent transactions on users homepage
     # @transactions = policy_scope(Transaction).where(sender_account: @accounts).order(created_at: :desc)
   end

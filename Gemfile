@@ -38,6 +38,8 @@ gem 'pundit'
 gem "chartkick"
 # for chart grouping
 gem 'groupdate'
+gem 'dotenv-rails', groups: [:development, :test]
+
 
 gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass'
