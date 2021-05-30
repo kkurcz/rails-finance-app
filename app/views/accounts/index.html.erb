@@ -15,9 +15,11 @@
         </p>
       <% end %>
       <div class="chart">
-        <% currency = AccountUpdate.where(account_id: account.id) %>
-        <% data = AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance) %>
-        <%= line_chart data, ytitle: "#{currency.last.currency}", label: "Value" %>
+        <% if AccountUpdate.where(account_id: account.id).all.count > 0 %>
+          <% currency = AccountUpdate.where(account_id: account.id) %>
+          <% data = AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance) %>
+          <%= line_chart data, ytitle: "#{currency.last.currency}", label: "Value" %>
+        <% end  %>
       </div>
     </div>
   <% end  %>
@@ -31,13 +33,15 @@
   💰 $<%= @total_usd %> | ¥<%= @total_cny %> | €<%= @total_euro %>
 </p>
 
-<div class="chart-big">
-  <% data = [{name: "USD", data: AccountUpdate.group_by_day(:created_at).sum(:balance_usd)},
-                  {name: "CNY", data: AccountUpdate.group_by_day(:created_at).sum(:balance_cny)},
-                  {name: "EURO", data: AccountUpdate.group_by_day(:created_at).sum(:balance_euro)}]  %>
-  <%= line_chart data, xtitle: "Date", ytitle: "Balance", label: "Value"%>
-</div>
+<% if AccountUpdate.count > 0  %>
 
+  <div class="chart-big">
+    <% data = [{name: "USD", data: AccountUpdate.group_by_day(:created_at).sum(:balance_usd)},
+                    {name: "CNY", data: AccountUpdate.group_by_day(:created_at).sum(:balance_cny)},
+                    {name: "EURO", data: AccountUpdate.group_by_day(:created_at).sum(:balance_euro)}]  %>
+    <%= line_chart data, xtitle: "Date", ytitle: "Balance", label: "Value"%>
+  </div>
+<% end  %>
 
 <div class="mt-5">
   👉 <%= link_to 'Create a new account', new_account_path %>
