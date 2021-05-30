@@ -1,7 +1,6 @@
 require 'net/http'
 require 'json'
 
-
 class AccountUpdate < ApplicationRecord
   belongs_to :account
 
@@ -12,19 +11,19 @@ class AccountUpdate < ApplicationRecord
   # monetize :price_cents
   def convert_currencies
     # Setting URL
-    urlUSD = "https://v6.exchangerate-api.com/v6/#{ENV[CURRENCY_API_KEY]}/latest/USD"
+    urlUSD = "https://v6.exchangerate-api.com/v6/#{ENV['CURRENCY_API_KEY']}/latest/USD"
     uri = URI(urlUSD)
     responseUSD = Net::HTTP.get(uri)
     response_objUSD = JSON.parse(responseUSD)
 
 
-    urlCNY = "https://v6.exchangerate-api.com/v6/#{ENV[CURRENCY_API_KEY]}/latest/CNY"
+    urlCNY = "https://v6.exchangerate-api.com/v6/#{ENV['CURRENCY_API_KEY']}/latest/CNY"
     uri = URI(urlCNY)
     responseCNY = Net::HTTP.get(uri)
     response_objCNY = JSON.parse(responseCNY)
 
 
-    urlEUR = "https://v6.exchangerate-api.com/v6/#{ENV[CURRENCY_API_KEY]}/latest/EUR"
+    urlEUR = "https://v6.exchangerate-api.com/v6/#{ENV['CURRENCY_API_KEY']}/latest/EUR"
     uri = URI(urlEUR)
     responseEUR = Net::HTTP.get(uri)
     response_objEUR = JSON.parse(responseEUR)
