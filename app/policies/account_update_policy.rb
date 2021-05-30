@@ -14,10 +14,10 @@ class AccountUpdatePolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    user == record.user_id
   end
 
   def destroy?
-    true
+    user == record.user_id
   end
 end
