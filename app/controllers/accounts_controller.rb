@@ -7,15 +7,16 @@ class AccountsController < ApplicationController
 
     @accounts = policy_scope(Account).order(created_at: :asc)
 
-
     @total_usd = 0
     @total_cny = 0
     @total_euro = 0
 
     @accounts.each do |account|
-      @total_usd += AccountUpdate.where(account_id: account.id).last.balance_usd
-      @total_cny += AccountUpdate.where(account_id: account.id).last.balance_cny
-      @total_euro += AccountUpdate.where(account_id: account.id).last.balance_euro
+      if AccountUpdate.where(account_id: account.id).all.count > 0
+        @total_usd += AccountUpdate.where(account_id: account.id).last.balance_usd
+        @total_cny += AccountUpdate.where(account_id: account.id).last.balance_cny
+        @total_euro += AccountUpdate.where(account_id: account.id).last.balance_euro
+      end
     end
 
     # policy_scope(AccountUpdate).each do |au|
