@@ -12,7 +12,7 @@ class AccountsController < ApplicationController
     @total_euro = 0
 
     @accounts.each do |account|
-      if AccountUpdate.where(account_id: account.id).all.count > 0
+      if AccountUpdate.where(account_id: account.id).all.count > 0 && AccountUpdate.where(account_id: account.id).last.balance_usd != nil
         @total_usd += AccountUpdate.where(account_id: account.id).last.balance_usd
         @total_cny += AccountUpdate.where(account_id: account.id).last.balance_cny
         @total_euro += AccountUpdate.where(account_id: account.id).last.balance_euro
