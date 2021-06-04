@@ -46,13 +46,14 @@ class AccountUpdate < ApplicationRecord
       self.balance_cny = self.balance
     elsif self.currency == "EURO"
       self.balance_usd = self.balance * euro_usd_rate
-      self.balance_euro = self.balance * euro_cny_rate
-      self.balance_cny = self.balance
+      self.balance_euro = self.balance
+      self.balance_cny = self.balance * euro_cny_rate
     else
       self.balance_usd = self.balance
       self.balance_euro = self.balance * usd_euro_rate
       self.balance_cny = self.balance  * usd_cny_rate
     end
+    # raise
     self.save
     # raise
   end
