@@ -1,5 +1,8 @@
 <h1 class="">Your Accounts</h1>
-<p>All accounts</p>
+
+<div class="my-3">
+  👉 <%= link_to 'Create a new account', new_account_path %>
+</div>
 
 <div class="row">
   <% @accounts.each do |account|%>
@@ -17,7 +20,7 @@
       <div class="chart">
         <% if AccountUpdate.where(account_id: account.id).all.count > 0 %>
           <% currency = AccountUpdate.where(account_id: account.id) %>
-          <% data = AccountUpdate.where(account_id: account.id).group_by_day(:created_at).sum(:balance) %>
+          <% data = AccountUpdate.where(account_id: account.id).group_by_month(:created_at).sum(:balance) %>
           <%= line_chart data, ytitle: "#{currency.last.currency}", label: "Value" %>
         <% end  %>
       </div>
@@ -36,13 +39,10 @@
 <% if AccountUpdate.count > 0  %>
 
   <div class="chart-big">
-    <% data = [{name: "USD", data: AccountUpdate.group_by_day(:created_at).sum(:balance_usd)},
-                    {name: "CNY", data: AccountUpdate.group_by_day(:created_at).sum(:balance_cny)},
-                    {name: "EURO", data: AccountUpdate.group_by_day(:created_at).sum(:balance_euro)}]  %>
+    <% data = [{name: "USD", data: AccountUpdate.group_by_month(:created_at).sum(:balance_usd)},
+                    {name: "CNY", data: AccountUpdate.group_by_month(:created_at).sum(:balance_cny)},
+                    {name: "EURO", data: AccountUpdate.group_by_month(:created_at).sum(:balance_euro)}]  %>
     <%= line_chart data, xtitle: "Date", ytitle: "Balance", label: "Value"%>
   </div>
 <% end  %>
 
-<div class="mt-5">
-  👉 <%= link_to 'Create a new account', new_account_path %>
-</div>
