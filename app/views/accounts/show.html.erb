@@ -7,8 +7,11 @@
 <h3 class="mt-5">History</h3>
 <ul>
   <% @account_updates.each do |au| %>
-    <li>
-      <%= au.balance %> | <%= au.currency %> -- <%= link_to "Delete", account_account_update_path(au.id), method: :delete, data: {confirm: "Are you sure?"} %>
+    <li class="p-3">
+      <div class="h4">🗓 <%= au.created_at.strftime("%A, %b %e %Y") %></div>
+      <div class="h5">
+        <span class=""></span><%=  au.balance %> <%= au.currency %> </span><span class="h6 font-weight-light" > | == €<%= au.balance_euro %> | ¥<%= au.balance_cny %> | $<%= au.balance_usd %></span> -- <%= link_to "Delete", account_account_update_path(au.id), method: :delete, data: {confirm: "Are you sure?"} %>
+      </div>
     </li>
   <% end %>
 </ul>

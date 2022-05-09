@@ -1,4 +1,4 @@
-<h1 class="">Your Accounts</h1>
+<h1 class="text-white">Your Accounts</h1>
 
 <div class="my-3">
   👉 <%= link_to 'Create a new account', new_account_path %>
@@ -11,11 +11,14 @@
       <p class="d-inline-block">
         <%= link_to '🆕Add', new_account_account_update_path(account) %>
       </p>
-      <% @account_updates.where(account_id: account.id).order(created_at: :desc).each do |au| %>
+      <% @account_updates.where(account_id: account.id).order(created_at: :desc).first(3).each do |au| %>
         <p>
-          💸 $<%= au.balance_usd %> | ¥<%= au.balance_cny %> | €<%= au.balance_euro %> | 🗓 <%= au.created_at.strftime("%A, %b %e %Y") %>
+          💸 <span class="h5">€<%= au.balance_euro %></span> | ¥<%= au.balance_cny %> | $<%= au.balance_usd %> | 🗓 <%= au.created_at.strftime("%A, %b %e %Y") %>
           -- <%= link_to "Delete", account_account_update_path(account.id, au.id), method: :delete, data: {confirm: "Are you sure?"} %>
         </p>
+      <% end %>
+      <% if @account_updates.where(account_id: account.id).order(created_at: :desc).count > 3 %>
+        <div class="text-center">...</div>
       <% end %>
       <div class="chart">
         <% if AccountUpdate.where(account_id: account.id).all.count > 0 %>
@@ -26,6 +29,18 @@
       </div>
     </div>
   <% end  %>
+</div>
+
+<div class="p-5 border-top mt-5">
+  <% @accounts.each do |account| %> 
+    <div class="p-3 d-inline-block">
+      <span class="<%= 'h3 text-danger' if account.account_updates.last.balance_euro >= 1000 %>">
+        <span class="<%= 'h2 font-weight-bold text-underline' if account.account_updates.last.balance_euro >= 5000 %>">
+          <%= account.name %> | €<%= account.account_updates.last.balance_euro %>
+        </span>
+      </span>
+    </div>
+  <% end %>
 </div>
 
 
@@ -43,6 +58,9 @@
                     {name: "CNY", data: AccountUpdate.group_by_month(:created_at).sum(:balance_cny)},
                     {name: "EURO", data: AccountUpdate.group_by_month(:created_at).sum(:balance_euro)}]  %>
     <%= line_chart data, xtitle: "Date", ytitle: "Balance", label: "Value"%>
+
   </div>
+
 <% end  %>
+
 
